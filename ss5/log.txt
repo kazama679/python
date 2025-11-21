@@ -1,0 +1,6 @@
+2025-11-21 09:15:00 Server started
+2025-11-21 10:02:05 User john logged in
+2025-11-20 23:59:59 Daily backup completed
+2025/11/21 11:30:10 Scheduled job ran
+21-11-2025 12:45:00 Error: unable to connect to DB
+21/11/2025 13:00:00 User alice logged out

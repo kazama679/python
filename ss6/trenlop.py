@@ -17,3 +17,4 @@ print(f"{result}")
 
 print(f"{np_array+10}")
 print(f"{np.sum(np_array)}")
+

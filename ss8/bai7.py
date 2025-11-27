@@ -5,7 +5,7 @@ import pandas as pd
 import re
 
 # Thay đổi đường dẫn này tới thư mục logs của bạn
-logs_dir = Path('C:/code/python/ss8/logs')
+logs_dir = Path('/logs')
 if not logs_dir.exists():
     print('Thư mục logs/ không tồn tại. Vui lòng tạo và thêm các file JSON.')
 else:

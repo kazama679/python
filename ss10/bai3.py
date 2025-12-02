@@ -1,23 +1,14 @@
 import numpy as np
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 
 np.random.seed(2)
-sns.set_theme(style="whitegrid")
+data = np.random.normal(loc=0, scale=1, size=1000)
 
-hours = np.random.randint(1, 11, size=150)
-noise = np.random.normal(0, 1.0, size=hours.size)
-score = np.clip(hours * 1.2 + noise, 0, 10)
-df = pd.DataFrame({"hours": hours, "score": score})
-
-plt.figure(figsize=(7, 5))
-sns.scatterplot(data=df, x="hours", y="score", alpha=0.7)
-sns.regplot(data=df, x="hours", y="score", scatter=False, color="red")
-plt.title("Bài 3: Scatterplot Hours vs Score")
-plt.xlabel("Hours")
-plt.ylabel("Score")
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.hist(data, bins=30, color='C1', edgecolor='k', alpha=0.9)
+ax.set_title("Bài 3: Histogram từ phân phối chuẩn (1000 giá trị)")
+ax.set_xlabel("Giá trị")
+ax.set_ylabel("Tần số")
+ax.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
 plt.show()
-
-print("Nhận xét: có xu hướng tương quan dương — điểm tăng khi hours tăng.")

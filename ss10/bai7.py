@@ -1,7 +1,17 @@
 import numpy as np
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+np.random.seed(4)
+mat = np.random.rand(10, 10)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.heatmap(mat, annot=True, fmt=".2f", cmap='viridis', ax=ax)
+ax.set_title("Bài 7: Heatmap ma trận 10x10")
+ax.set_xlabel("Cột")
+ax.set_ylabel("Hàng")
+plt.tight_layout()
+plt.show()
 
 np.random.seed(6)
 sns.set_theme(style="whitegrid")

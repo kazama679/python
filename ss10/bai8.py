@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 np.random.seed(7)
 sns.set_theme(style="whitegrid")
@@ -40,3 +41,25 @@ plt.tight_layout()
 plt.show()
 
 print("Phân tích ngắn (ví dụ): nhóm Shoes có doanh thu cao nhất; Bags biến động nhất; xu hướng tổng thể có hơi tăng do trend nhẹ.")
+
+x = np.linspace(0, 2*np.pi, 400)
+fig, ax = plt.subplots(figsize=(8, 5))
+line, = ax.plot(x, np.sin(x))
+ax.set_xlim(0, 2*np.pi)
+ax.set_ylim(-1.5, 1.5)
+ax.set_title("Bài 8: Đồ thị động y = sin(x + phase)")
+ax.set_xlabel("x")
+ax.set_ylabel("sin(...)")
+ax.grid(True, linestyle='--', alpha=0.5)
+
+
+def update(frame):
+    phase = frame * 0.1
+    y = np.sin(x + phase)
+    line.set_ydata(y)
+    return line,
+
+
+ani = FuncAnimation(fig, update, frames=range(0, 200), interval=50, blit=True)
+plt.tight_layout()
+plt.show()

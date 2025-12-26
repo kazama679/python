@@ -1,0 +1,21 @@
+{
+    'name': 'Hotel Management',
+    'version': '1.0',
+    'category': 'Hotel',
+    'summary': 'Manage hotel rooms and bookings',
+    'depends': ['base'],
+    'authors': 'Son',
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'security/booking_rule.xml',
+        'views/menu.xml',
+        'views/booking_view.xml',
+        'views/customer_view.xml',
+        'views/room_view.xml',
+        'views/config_view.xml',
+    ],
+    'application': True,
+    'installable': True,
+    'license': 'LGPL-3',
+}

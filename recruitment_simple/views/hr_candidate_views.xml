@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View cho HR Candidate -->
+    <record id="view_hr_candidate_form" model="ir.ui.view">
+        <field name="name">hr.candidate.form</field>
+        <field name="model">hr.candidate</field>
+        <field name="arch" type="xml">
+            <form string="Hồ sơ ứng viên">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Tên ứng viên..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="personal_info" string="Thông tin cá nhân">
+                            <field name="gender"/>
+                            <field name="birthday"/>
+                            <field name="expected_salary"/>
+                        </group>
+                        <group name="recruitment_info" string="Thông tin tuyển dụng">
+                            <field name="active"/>
+                            <button string="Đánh dấu đã tuyển" name="action_hire" type="object" 
+                                    class="btn-primary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Nội dung CV" name="cv_content">
+                            <field name="cv_content" placeholder="Nhập tóm tắt CV và kinh nghiệm..."/>
+                        </page>
+                        <page string="Đánh giá nội bộ" name="manager_note" 
+                              groups="recruitment_simple.group_hr_manager">
+                            <field name="manager_note" placeholder="Đánh giá nội bộ về ứng viên (chỉ Manager xem được)..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View cho HR Candidate -->
+    <record id="view_hr_candidate_tree" model="ir.ui.view">
+        <field name="name">hr.candidate.tree</field>
+        <field name="model">hr.candidate</field>
+        <field name="arch" type="xml">
+            <tree string="Danh sách ứng viên" default_order="name">
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="birthday"/>
+                <field name="expected_salary" sum="Tổng lương mong muốn"/>
+                <field name="is_hired" widget="boolean_toggle"/>
+                <field name="active" column_invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View cho HR Candidate -->
+    <record id="view_hr_candidate_search" model="ir.ui.view">
+        <field name="name">hr.candidate.search</field>
+        <field name="model">hr.candidate</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm ứng viên">
+                <field name="name" string="Tên ứng viên" 
+                       filter_domain="[('name', 'ilike', self)]"/>
+                <field name="cv_content" string="Nội dung CV"/>
+                <field name="expected_salary"/>
+                <separator/>
+                <filter string="Đã tuyển" name="filter_hired" domain="[('is_hired', '=', True)]"/>
+                <filter string="Chưa tuyển" name="filter_not_hired" domain="[('is_hired', '=', False)]"/>
+                <separator/>
+                <filter string="Nam" name="filter_male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Nữ" name="filter_female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter string="Lương > 10 triệu" name="filter_high_salary" 
+                        domain="[('expected_salary', '>=', 10000000)]"/>
+                <separator/>
+                <filter string="Đang hoạt động" name="filter_active" domain="[('active', '=', True)]"/>
+                <filter string="Không hoạt động" name="filter_inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Giới tính" name="group_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Trạng thái tuyển dụng" name="group_hired" context="{'group_by': 'is_hired'}"/>
+                    <filter string="Tháng sinh" name="group_birth_month" 
+                            context="{'group_by': 'birthday:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View cho HR Candidate -->
+    <record id="view_hr_candidate_kanban" model="ir.ui.view">
+        <field name="name">hr.candidate.kanban</field>
+        <field name="model">hr.candidate</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="is_hired" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="expected_salary"/>
+                <field name="is_hired"/>
+                <field name="birthday"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_header">
+                                    <strong class="oe_kanban_title">
+                                        <span><field name="name"/></span>
+                                    </strong>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li t-if="record.gender.raw_value">
+                                            Giới tính: <field name="gender"/>
+                                        </li>
+                                        <li t-if="record.birthday.raw_value">
+                                            Sinh: <field name="birthday"/>
+                                        </li>
+                                        <li t-if="record.expected_salary.raw_value">
+                                            Lương: <field name="expected_salary"/> VND
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

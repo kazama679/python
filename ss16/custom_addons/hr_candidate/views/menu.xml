@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_canđiate_action" model="ir.actions.act_window">
+            <field name="name">Danh sách ứng viên</field>
+            <field name="res_model">hr.candidate</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="hr_root_menu"
+            name="HR-Quản lí"
+            sequence="10"/>
+        <menuitem
+            id="hr_secondary_menu"
+            name="Danh sách ứng viên"
+            sequence="20"
+            parent="hr_root_menu"
+            action="hr_canđiate_action"
+        />
+    </data>
+</odoo>

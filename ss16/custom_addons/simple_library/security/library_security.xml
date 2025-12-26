@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ==================== CATEGORY: THÊM CATEGORY CHO MODULE ==================== -->
+        <record id="module_category_library" model="ir.module.category">
+            <field name="name">Thư viện</field>
+            <field name="description">Quản lý thư viện trường học</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ==================== GROUP 1: SINH VIÊN (Student) ==================== -->
+        <record id="group_library_student" model="res.groups">
+            <field name="name">Student (Sinh viên)</field>
+            <field name="category_id" ref="module_category_library"/>
+            <field name="comment">Sinh viên chỉ được xem danh sách sách, không được sửa đổi</field>
+        </record>
+
+        <!-- ==================== GROUP 2: THỦ THƯ (Librarian) ==================== -->
+        <record id="group_library_librarian" model="res.groups">
+            <field name="name">Librarian (Thủ thư)</field>
+            <field name="category_id" ref="module_category_library"/>
+            <field name="implied_ids" eval="[(4, ref('group_library_student'))]"/>
+            <field name="comment">Thủ thư quản lý toàn bộ: Thêm, Sửa, Xóa sách và xem giá nhập</field>
+        </record>
+    </data>
+</odoo>

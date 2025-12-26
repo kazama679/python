@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Nhóm Customer - chỉ xem -->
+        <record id="group_hr_customer" model="res.groups">
+            <field name="name">HR Customer</field>
+            <field name="comment">Khách hàng - chỉ được xem danh sách ứng viên</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <!-- Nhóm Recruiter - không được xóa -->  
+        <record id="group_hr_recruiter" model="res.groups">
+            <field name="name">HR Recruiter</field>
+            <field name="comment">Tuyển dụng viên - nhập liệu, chỉ thấy ứng viên do mình phụ trách, không được xóa</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_customer'))]"/>
+        </record>
+
+        <!-- Nhóm Manager - full quyền -->
+        <record id="group_hr_manager" model="res.groups">
+            <field name="name">HR Manager</field>
+            <field name="comment">Quản lý HR - thấy tất cả, được quyền xóa, nhìn thấy đánh giá nội bộ</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_recruiter'))]"/>
+        </record>
+    </data>
+</odoo>

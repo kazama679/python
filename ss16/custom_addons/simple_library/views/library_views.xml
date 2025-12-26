@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ==================== TREE VIEW (LIST VIEW) - TÙY BIẾN VỚI DECORATION VÀ WIDGET ==================== -->
+        <record id="view_library_book_tree" model="ir.ui.view">
+            <field name="name">library.book.tree</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách sách" decoration-danger="state == 'borrowed'" decoration-success="state == 'available'" decoration-muted="state == 'lost'">
+                    <field name="name"/>
+                    <field name="isbn"/>
+                    <field name="category_id"/>
+                    <field name="author_ids" widget="many2many_tags"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- ==================== FORM VIEW - TÙY BIẾN NÂNG CAO ==================== -->
+        <record id="view_library_book_form" model="ir.ui.view">
+            <field name="name">library.book.form</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <form string="Thông tin Sách">
+                    <!-- ==================== HEADER: STATUSBAR ==================== -->
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,available,borrowed,lost"/>
+                    </header>
+
+                    <!-- ==================== SHEET: THÔNG TIN CHÍNH ==================== -->
+                    <sheet>
+                        <!-- Tiêu đề và Subtitle -->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Tên sách..."/>
+                            </h1>
+                            <h3>
+                                <field name="isbn" placeholder="Mã ISBN..."/>
+                            </h3>
+                        </div>
+
+                        <!-- Độ mới sách (Priority Widget - Ngôi sao) -->
+                        <div>
+                            <label for="condition" string="Độ mới sách"/>
+                            <field name="condition" widget="priority"/>
+                        </div>
+
+                        <!-- Group Info: 2 Cột -->
+                        <group>
+                            <group string="Thông tin chung">
+                                <!-- Thể loại: Cấm tạo mới -->
+                                <field name="category_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Tác giả">
+                                <!-- Tác giả: Hiển thị dạng Tags màu sắc -->
+                                <field name="author_ids" widget="many2many_tags" options="{'color_field': 'name'}"/>
+                            </group>
+                        </group>
+
+                        <!-- ==================== NOTEBOOK: TAB CHI TIẾT ==================== -->
+                        <notebook>
+                            <!-- TAB 1: Lịch sử mượn trả -->
+                            <page string="Lịch sử mượn trả">
+                                <field name="loan_ids" editable="bottom">
+                                    <tree string="Danh sách mượn trả">
+                                        <field name="borrower_name"/>
+                                        <field name="borrow_date"/>
+                                        <field name="return_date"/>
+                                        <field name="is_returned"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <!-- TAB 2: Thông tin Kho (Mật - Chỉ Librarian thấy) -->
+                            <page string="Thông tin Kho" groups="simple_library.group_library_librarian">
+                                <group>
+                                    <field name="purchase_price"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ==================== SEARCH VIEW - TÙY BIẾN VỚI FILTER VÀ GROUP BY ==================== -->
+        <record id="view_library_book_search" model="ir.ui.view">
+            <field name="name">library.book.search</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Sách">
+                    <!-- Search Fields -->
+                    <field name="name" string="Tên sách"/>
+                    <field name="isbn" string="Mã ISBN"/>
+                    <field name="author_ids" string="Tác giả"/>
+                    <field name="category_id" string="Thể loại"/>
+
+                    <!-- Filters -->
+                    <filter string="Sách có sẵn" name="filter_available" domain="[('state', '=', 'available')]"/>
+                    <filter string="Sách mới nhập" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Sách đang mượn" name="filter_borrowed" domain="[('state', '=', 'borrowed')]"/>
+
+                    <!-- Separator -->
+                    <separator/>
+
+                    <!-- Group By -->
+                    <group expand="0" string="Gom nhóm theo">
+                        <filter string="Thể loại" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

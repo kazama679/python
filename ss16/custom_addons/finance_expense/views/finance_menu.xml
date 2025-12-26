@@ -1,0 +1,13 @@
+<odoo>
+    <record id="action_finance_expense" model="ir.actions.act_window">
+        <field name="name">Quản lý tài chính</field>
+        <field name="res_model">finance.expense</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_finance_root"
+        name="Quản lý tài chính"
+        action="action_finance_expense"
+    />
+</odoo>

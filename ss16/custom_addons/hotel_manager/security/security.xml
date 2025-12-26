@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hotel Receptionist -->
+    <record id="group_hotel_receptionist" model="res.groups">
+        <field name="name">Hotel Receptionist</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+    <!-- Hotel Manager -->
+    <record id="group_hotel_manager" model="res.groups">
+        <field name="name">Hotel Manager</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+</odoo>

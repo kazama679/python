@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="booking_rule_receptionist" model="ir.rule">
+        <field name="name">Receptionist: Hide Done Bookings</field>
+        <field name="model_id" ref="model_hotel_booking"/>
+        <field name="groups" eval="[(4, ref('group_hotel_receptionist'))]"/>
+        <field name="domain_force">
+            [('state', 'in', ('draft', 'confirmed'))]
+        </field>
+    </record>
+
+</odoo>
